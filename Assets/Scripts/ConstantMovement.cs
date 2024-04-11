@@ -6,9 +6,9 @@ public class ConstantMovement : MonoBehaviour {
 
     public Vector3 Movement;
     public Vector3 Rotation;
-	
-	// Update is called once per frame
-	void FixedUpdate () {
+
+    // Update is called once per frame
+    void FixedUpdate () {
         transform.Rotate(Rotation);
         transform.position += Movement;
 	}

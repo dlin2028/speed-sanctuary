@@ -18,6 +18,8 @@ public class Ship : MonoBehaviour
 
     public float Speed = 1;
 
+    public int MaxSpeed;
+
     public float TurnSpeed = 1;
     public float StopSpeed;
 
@@ -46,7 +48,7 @@ public class Ship : MonoBehaviour
     private Rigidbody body;
     new private Collider collider;
 
-    public bool fixNormals = true;
+    public bool fixNormals = true; // REMOVE LATER
     void Start()
     {
         upKey = ShipPreparer.UpKey;
@@ -72,6 +74,8 @@ public class Ship : MonoBehaviour
 
     void FixedUpdate()
     {
+        Vector3.ClampMagnitude(body.velocity, MaxSpeed);
+
         if(fixNormals)
         {
             normalDrag = body.drag;
@@ -87,7 +91,7 @@ public class Ship : MonoBehaviour
             body.mass = SpecialBehavor.Mass;
             
             body.drag = SpecialBehavor.Drag;
-            body.angularDrag = SpecialBehavor.Drag;
+            body.angularDrag = SpecialBehavor.AngularDrag;
 
             collider.material = SpecialBehavor.PhysicMaterial;
 
@@ -106,15 +110,15 @@ public class Ship : MonoBehaviour
                 body.drag = normalDrag;
             }
 
-            if (Input.GetKey(leftKey))
+            if (Input.GetKey(leftKey) || Vector3.Magnitude(body.velocity) > 100)
             {
                 body.AddRelativeTorque(Vector3.down * SpecialBehavor.TurnSpeed);
-                body.AddRelativeForce(Vector3.left * SpecialBehavor.DriftAmount * (52.5f + (295 / ((body.velocity.x) * (body.velocity.z)))));
+                body.AddRelativeForce(Vector3.left * (100f * SpecialBehavor.DriftAmount * + ((10 * SpecialBehavor.DriftAmount) / ((transform.InverseTransformDirection(body.velocity).x) * (transform.InverseTransformDirection(body.velocity).z)))));
             }
-            if (Input.GetKey(rightKey))
+            if (Input.GetKey(rightKey) || Vector3.Magnitude(body.velocity) > 100)
             {
                 body.AddRelativeTorque(Vector3.up * SpecialBehavor.TurnSpeed);
-                body.AddRelativeForce(Vector3.right * SpecialBehavor.DriftAmount * (52.5f + (295 / ((body.velocity.x) * (body.velocity.z)))));
+                body.AddRelativeForce(Vector3.right * (100f * SpecialBehavor.DriftAmount * + ((10 * SpecialBehavor.DriftAmount) / ((transform.InverseTransformDirection(body.velocity).x) * (transform.InverseTransformDirection(body.velocity).z)))));
             }
         }
         else
