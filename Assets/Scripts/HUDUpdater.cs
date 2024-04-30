@@ -31,7 +31,7 @@ public class HUDUpdater : MonoBehaviour {
         Vector3 velocity = GetComponent<Ship>().getVelocity();
         Vector2 velocity2 = new Vector2 (velocity.x, velocity.z);
 
-        Text.text = "Time: " + data.CurrentTime.ToString("hh':'mm':'ss':'FF") +  // remove trailing 0's
+        Text.text = "Time: " + data.CurrentTime.ToString("hh':'mm':'ss':'ff") +  // remove trailing 0's
                     "\nLap: " + data.Laps.ToString() +
                     "\nSpeed: " + velocity2.magnitude.ToString("f0");
 

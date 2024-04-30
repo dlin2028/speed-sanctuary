@@ -48,6 +48,8 @@ public class Ship : MonoBehaviour
     private Rigidbody body;
     new private Collider collider;
 
+    private PauseController pauseController;  // [SL & ML] to pause keyboard input
+
     public Vector3 getVelocity() {  // [ML] for speed display in UI
         return body.velocity;
     }
@@ -69,6 +71,8 @@ public class Ship : MonoBehaviour
         normalAngularDrag = body.angularDrag;
         normalMass = body.mass;
         normalMaterial = collider.material;
+        
+        pauseController = GameObject.Find("PauseController").GetComponent<PauseController>();  // find pause controller
     }
 
     // Update is called once per frame
@@ -78,6 +82,8 @@ public class Ship : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (pauseController.paused) return;  // pause keyboard input
+
         Vector3.ClampMagnitude(body.velocity, MaxSpeed);
 
         if(fixNormals)
@@ -164,11 +170,15 @@ public class Ship : MonoBehaviour
 
         if (Input.GetKey(resetKey))
         {
-            GetComponent<HUDUpdater>().FinishLine.ResetCheckPoints(transform);
-
-            transform.position = Vector3.zero;
-            transform.rotation = Quaternion.identity;
-            body.velocity = Vector2.zero;
+            RestartRound();
         }
+    }
+
+    public void RestartRound() {
+        GetComponent<HUDUpdater>().FinishLine.ResetCheckPoints(transform);
+
+        transform.position = Vector3.zero;
+        transform.rotation = Quaternion.identity;
+        body.velocity = Vector2.zero;
     }
 }

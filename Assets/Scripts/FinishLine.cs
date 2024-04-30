@@ -14,6 +14,8 @@ public class FinishLine : MonoBehaviour
 
     public List<Checkpoint> CheckPoints;
 
+    private PauseController pauseController;  // [SL & ML] to pause timer
+
     private void Awake()
     {
         foreach (Transform child in ShipParent)
@@ -25,6 +27,8 @@ public class FinishLine : MonoBehaviour
         {
             playerData.Add(new PlayerData(PlayerColliders[i].transform));
         }
+
+        pauseController = GameObject.Find("PauseController").GetComponent<PauseController>();  // find pause controller
     }
 
     private void OnTriggerEnter(Collider other)
@@ -34,6 +38,8 @@ public class FinishLine : MonoBehaviour
 
     private void Update()
     {
+        if (pauseController.paused) return;  // pause timer
+
         foreach (PlayerData player in playerData)
         {
             player.CurrentTime += new TimeSpan(0, 0, 0, 0, (int)Math.Round(Time.deltaTime * 1000, 0));
