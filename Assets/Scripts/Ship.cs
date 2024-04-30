@@ -48,6 +48,10 @@ public class Ship : MonoBehaviour
     private Rigidbody body;
     new private Collider collider;
 
+    public Vector3 getVelocity() {  // [ML] for speed display in UI
+        return body.velocity;
+    }
+
     public bool fixNormals = true; // REMOVE LATER
     void Start()
     {

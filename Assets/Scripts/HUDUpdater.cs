@@ -1,4 +1,6 @@
-﻿using System;
+﻿// #define _S_DEBUG
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,7 +28,19 @@ public class HUDUpdater : MonoBehaviour {
     }
 
     void Update () {
-        Text.text = "Time: " + data.CurrentTime.ToString() + "\nLap: " + data.Laps.ToString();
+        Vector3 velocity = GetComponent<Ship>().getVelocity();
+        Vector2 velocity2 = new Vector2 (velocity.x, velocity.z);
+
+        Text.text = "Time: " + data.CurrentTime.ToString("hh':'mm':'ss':'FF") +  // remove trailing 0's
+                    "\nLap: " + data.Laps.ToString() +
+                    "\nSpeed: " + velocity2.magnitude.ToString("f0");
+
+#if _S_DEBUG
+        Text.text += "\nReal Speed: " + velocity.magnitude.ToString("f0") +
+                     "\nPosition: (" + data.Transform.position.x.ToString() +
+                     ", " + data.Transform.position.y.ToString() + 
+                     ", " + data.Transform.position.z.ToString() + ")";
+#endif
 
         if (data.BestTime < new TimeSpan(1, 0, 0))
         {
