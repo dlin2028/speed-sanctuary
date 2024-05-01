@@ -18,6 +18,7 @@ public class MenuLoader : MonoBehaviour
     public bool BeginLoad = true;
 
     public GameObject menuCanvas;
+    public GameObject loadingCanvas;
 
     protected MenuLoader() { }
 
@@ -63,6 +64,10 @@ public class MenuLoader : MonoBehaviour
         if(menuCanvas)
         {
             menuCanvas.SetActive(true);
+        }
+        if (loadingCanvas)
+        {
+            loadingCanvas.SetActive(false);
         }
     }
 
