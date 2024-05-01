@@ -17,3 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tracks/RaceTrack1.unity
     guid: 503f996c5da3762429f3de289fbb8e60
+  - enabled: 1
+    path: Assets/Scenes/Tracks/joshtrack2v1.unity
+    guid: a995cb5818b93b0418674fef7a8c9e49
+  m_configObjects: {}
