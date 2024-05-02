@@ -70,6 +70,7 @@ public class PauseController : MonoBehaviour
             FlipPauseStatus();
         }
         else if (button.name == "PausedMainMenuButton") {
+            FlipPauseStatus();
             SceneManager.LoadScene("Loading");
         }
     }
